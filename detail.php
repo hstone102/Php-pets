@@ -19,17 +19,20 @@
     $error_message = '';
     $row = [];
 
-    if (!isset($_GET["id"]) || $_GET["id"] == '') {
+    $safeId = htmlentities($_GET["id"]);
+
+    if (!isset($safeId) || $safeId == '') {
         $error_message = "Pet ID is missing. Sorry!";
     }
     else {
         include("util/utilities.php");
-        $id = $_GET["id"];
         $db = getDb();
+
         $pet = pg_query("SELECT p.*, cl.level, cl.description AS care_level_description
             FROM pets AS p
             JOIN care_levels AS cl ON cl.id = p.care_level_id
-            WHERE p.id = " . $id);
+            WHERE p.id = " . intval($safeId));
+
         $row = pg_fetch_assoc($pet);
         if (!$row) {
             $error_message = "The pet ID supplied didn't match a pet in our database. Sorry!";
