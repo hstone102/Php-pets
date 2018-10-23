@@ -12,6 +12,8 @@
   </head>
   <body class="container mt-3">
 
+      <p class="text-left"><a href="/">Back to Pet List</a></p>
+
 <?php
 
     $error_message = '';
@@ -27,7 +29,7 @@
             FROM pets AS p
             JOIN care_levels AS cl ON cl.id = p.care_level_id
             WHERE p.id = " . $id);
-        $row = pg_fetch_assoc($pet);    
+        $row = pg_fetch_assoc($pet);
         if (!$row) {
             $error_message = "The pet ID supplied didn't match a pet in our database. Sorry!";
         }
@@ -41,7 +43,10 @@
 <?php
     }
     else {
+
 ?>
+
+
 
     <h1><?=$row["name"]?></h1>
 
@@ -58,6 +63,41 @@
     <div class="form-group">
         <label for="petDescription">Description</label>
         <textarea id="petDescription" class="form-control" readonly><?=$row["description"]?></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="petAge">Age (in years)</label>
+        <input id="petAge" class="form-control" readonly value="<?=$row["age_in_years"]?>">
+    </div>
+
+    <div class="form-group">
+        <label for="petWeight">Weight (in pounds)</label>
+        <input id="petWeight" class="form-control" readonly value="<?=$row["weight_in_pounds"]?>">
+    </div>
+
+    <div class="form-group">
+        <label for="petSex">Sex</label>
+        <input id="petSex" class="form-control" readonly value="<?=$row["sex"]?>">
+    </div>
+
+    <div class="form-group">
+        <label for="petIsFixed">Spayed/Neutered?</label>
+        <input id="petIsFixed" class="form-control" readonly value="<?php echo $row["is_fixed"] == "t" ? "Yes" : "No" ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="petKids">Good with Kids?</label>
+        <input id="petKids" class="form-control" readonly value="<?php echo $row["is_good_with_kids"] == "t" ? "Yes" : "No" ?>">
+    </div>
+
+    <div class="form-group">
+        <label for="petCareLevel">Care Level</label>
+        <textarea id="petCareLevel" class="form-control" readonly><?=$row["level"]?>: <?=$row["care_level_description"]?></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="petFee">Adoption Fee</label>
+        <input id="petFee" class="form-control" readonly value="$<?=sprintf("%01.2f", $row["adoption_fee"]);?>">
     </div>
 
 <?php
