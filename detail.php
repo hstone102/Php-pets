@@ -23,8 +23,9 @@
         $error_message = "Pet ID is missing. Sorry!";
     }
     else {
+        include("util/utilities.php");
         $id = $_GET["id"];
-        $db = pg_connect("host=localhost port=5432 dbname=classroom2 user=classroom2user password=twotwotwo");
+        $db = getDb();
         $pet = pg_query("SELECT p.*, cl.level, cl.description AS care_level_description
             FROM pets AS p
             JOIN care_levels AS cl ON cl.id = p.care_level_id

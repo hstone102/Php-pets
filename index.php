@@ -14,7 +14,8 @@
 
 <?php
 
-    $db = pg_connect("host=localhost port=5432 dbname=classroom2 user=classroom2user password=twotwotwo");
+    include("util/utilities.php");
+    $db = getDb();
     $petList = pg_query($db, "SELECT p.id, p.name, p.species, p.breed, p.adoption_fee, cl.level, cl.description
 FROM pets AS p
 JOIN care_levels AS cl ON p.care_level_id = cl.id
