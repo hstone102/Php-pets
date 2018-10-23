@@ -10,7 +10,7 @@
 
     <title>PHP Pets Adoption Service</title>
   </head>
-  <body>
+  <body class="container mt-3">
 
 <?php
 
@@ -21,7 +21,7 @@
 
     <h1>PHP Pets Adoption Service</h1>
 
-    <h3>List of Pets</h3>
+    <h3 class="mb-4 mt-4">List of Pets</h3>
 
     <table class="table">
         <thead>
@@ -34,12 +34,12 @@
         <tbody>
 
 <?php
-    while ($row = pg_fetch_row($petList)) {
+    while ($row = pg_fetch_assoc($petList)) {
 ?>
             <tr>
-                <td><?=$row[0]?></td>
-                <td><?=$row[1]?> <?=$row[2]?></td>
-                <td><?=$row[3]?></td>
+                <td><?=$row["name"]?></td>
+                <td><?=$row["species"]?><?php if ($row["breed"]) { echo ", " . $row["breed"]; } ?></td>
+                <td><?=$row["adoption_fee"]?></td>
             </tr>
 <?php
     }
