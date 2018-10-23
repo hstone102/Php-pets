@@ -39,7 +39,7 @@
             <tr>
                 <td><?=$row["name"]?></td>
                 <td><?=$row["species"]?><?php if ($row["breed"]) { echo ", " . $row["breed"]; } ?></td>
-                <td><?=$row["adoption_fee"]?></td>
+                <td class="text-right">$<?=sprintf("%01.2f", $row["adoption_fee"]);?></td>
             </tr>
 <?php
     }
