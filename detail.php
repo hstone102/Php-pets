@@ -46,9 +46,11 @@
 
 ?>
 
-
-
     <h1><?=$row["name"]?></h1>
+
+<?php if ($row["is_adopted"] == "t") { ?>
+    <div class="alert alert-success">This pet already has a home! Yay!</div>
+<?php } ?>
 
     <div class="form-group">
         <label for="petSpecies">Species</label>

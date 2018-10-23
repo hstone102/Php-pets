@@ -18,6 +18,7 @@
     $petList = pg_query($db, "SELECT p.id, p.name, p.species, p.breed, p.adoption_fee, cl.level, cl.description
 FROM pets AS p
 JOIN care_levels AS cl ON p.care_level_id = cl.id
+WHERE is_adopted = false
 ORDER BY name");
 
 ?>
