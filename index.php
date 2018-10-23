@@ -15,7 +15,10 @@
 <?php
 
     $db = pg_connect("host=localhost port=5432 dbname=classroom2 user=classroom2user password=twotwotwo");
-    $petList = pg_query("select name, species, breed, adoption_fee from pets order by name");
+    $petList = pg_query($db, "SELECT p.id, p.name, p.species, p.breed, p.adoption_fee, cl.level, cl.description
+FROM pets AS p
+JOIN care_levels AS cl ON p.care_level_id = cl.id
+ORDER BY name");
 
 ?>
 
@@ -28,6 +31,7 @@
             <tr>
                 <th>Name</th>
                 <th>Species/Breed</th>
+                <th>Care Level</th>
                 <th>Adoption Fee</th>
             </tr>
         </thead>
@@ -37,8 +41,9 @@
     while ($row = pg_fetch_assoc($petList)) {
 ?>
             <tr>
-                <td><?=$row["name"]?></td>
+                <td><a href="detail.php?id=<?=$row["id"]?>"><?=$row["name"]?></a></td>
                 <td><?=$row["species"]?><?php if ($row["breed"]) { echo ", " . $row["breed"]; } ?></td>
+                <td data-toggle="tooltip" data-placement="bottom" title="<?=$row["description"]?>"><?=$row["level"]?></td>
                 <td class="text-right">$<?=sprintf("%01.2f", $row["adoption_fee"]);?></td>
             </tr>
 <?php
