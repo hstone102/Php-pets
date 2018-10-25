@@ -17,10 +17,10 @@
     include("util/utilities.php");
     $db = getDb();
     $petList = pg_query($db, "SELECT p.id, p.name, p.species, p.breed, p.adoption_fee, cl.level, cl.description
-FROM pets AS p
-JOIN care_levels AS cl ON p.care_level_id = cl.id
-WHERE is_adopted = false
-ORDER BY name");
+      FROM pets AS p
+      JOIN care_levels AS cl ON p.care_level_id = cl.id
+      WHERE is_adopted = false
+      ORDER BY name");
 
 ?>
 
@@ -53,6 +53,41 @@ ORDER BY name");
 ?>
 
         </tbody>
+    </table>
+
+<?php
+
+    $supplyList = pg_query($db, "SELECT s.name, s.price, s.description, s.quantity
+      FROM supplies AS s
+      ORDER BY name");
+?>
+<h2 class="heading mt-5">Pet Supplies</h2>
+    <table class="table mt-5">
+      <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Quantity</th>
+        </tr>
+      </thead>
+
+      <?php
+          while ($row = pg_fetch_assoc($supplyList)) {
+      ?>
+            <tr>
+                <td><?=$row["name"]?></a></td>
+                <td class="text-right">$<?=sprintf("%01.2f", $row["price"]);?></td>
+                <td class="text-right"><?=$row["description"]?></td>
+                <td class="text-right"><?=$row["quantity"]?></td>
+
+            </tr>
+      <?php
+          }
+      ?>
+      <tbody>
+      </tbody>
+
     </table>
 
     <!-- Optional JavaScript -->
